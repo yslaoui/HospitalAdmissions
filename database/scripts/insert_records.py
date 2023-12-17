@@ -5,6 +5,9 @@ import csv
 data_file = '../csv/healthcare_dataset.csv'
 
 medications = set()
+genders = set()
+blood_types = set()
+insurances = set()
 
 # Populate data structures
 with open(data_file) as csv_file:
@@ -12,6 +15,11 @@ with open(data_file) as csv_file:
     header = csv_reader.__next__() # skip the header
     for row in csv_reader:
         medications.add(row[13])
+        genders.add(row[2])
+        blood_types.add(row[3])
+        insurances.add(row[8])
+
+
 
 print(medications)
 
@@ -25,13 +33,27 @@ if db_connection is not None and db_connection.is_connected():
         print(f"Successfully connected to MySQL Server version {db_info}")
         # Create a cursor object using the cursor() method
         cursor = db_connection.cursor()
-        # ... rest of your code ...
-    # Loop through the rows in the CSV file
+        # Delete all records from the database to start afresh 
+        cursor.execute("DELETE FROM medications")
+        cursor.execute("DELETE FROM genders")
+        cursor.execute("DELETE FROM blood_types")
+        cursor.execute("DELETE FROM insurances")
+
+
+        # Insert data in lookup tables
         for elem in medications:
-            # Create the INSERT INTO statement
             query = "INSERT INTO medications (medication) VALUES (%s)"
-            # Execute the SQL command
-            cursor.execute(query, (elem,))
+            cursor.execute(query, (elem,))        
+        for elem in genders:
+            query = "INSERT INTO genders (gender) VALUES (%s)"
+            cursor.execute(query, (elem,))      
+        for elem in blood_types:
+            query = "INSERT INTO blood_types (blood_type) VALUES (%s)"
+            cursor.execute(query, (elem,))   
+        for elem in insurances:
+            query = "INSERT INTO insurances (insurance) VALUES (%s)"
+            cursor.execute(query, (elem,))        
+       
         #Commit the changes in the database
         db_connection.commit()
         

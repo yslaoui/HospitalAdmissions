@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS blood_types (id INT AUTO_INCREMENT, blood_type VARCHA
 CREATE TABLE IF NOT EXISTS hospitals (id INT AUTO_INCREMENT, hospital VARCHAR(50),PRIMARY KEY(id));
 CREATE TABLE IF NOT EXISTS doctors (id INT AUTO_INCREMENT, doctor VARCHAR(50),PRIMARY KEY(id));
 CREATE TABLE IF NOT EXISTS medications (id INT AUTO_INCREMENT, medication VARCHAR(50),PRIMARY KEY(id));
-CREATE TABLE IF NOT EXISTS insurance (id INT AUTO_INCREMENT, insurance VARCHAR(50),PRIMARY KEY(id));
+CREATE TABLE IF NOT EXISTS insurances (id INT AUTO_INCREMENT, insurance VARCHAR(50),PRIMARY KEY(id));
 CREATE TABLE IF NOT EXISTS admission_types (id INT AUTO_INCREMENT, admission_type VARCHAR(50),PRIMARY KEY(id));
 CREATE TABLE IF NOT EXISTS test_results (id INT AUTO_INCREMENT, test_result VARCHAR(50),PRIMARY KEY(id));
 CREATE TABLE IF NOT EXISTS medical_conditions (id INT AUTO_INCREMENT, medical_condition VARCHAR(50),PRIMARY KEY(id));
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS admissions (
    FOREIGN KEY (hospital_id) REFERENCES hospitals (id) ON DELETE CASCADE,
    FOREIGN KEY (doctor_id) REFERENCES doctors (id) ON DELETE CASCADE,
    FOREIGN KEY (medication_id) REFERENCES medications (id) ON DELETE CASCADE,
-   FOREIGN KEY (insurance_id) REFERENCES insurance (id) ON DELETE CASCADE,
+   FOREIGN KEY (insurance_id) REFERENCES insurances (id) ON DELETE CASCADE,
    FOREIGN KEY (admission_type_id) REFERENCES admission_types (id) ON DELETE CASCADE,
    FOREIGN KEY (test_result_id) REFERENCES test_results (id) ON DELETE CASCADE,
    FOREIGN KEY (medical_condition_id) REFERENCES medical_conditions (id) ON DELETE CASCADE
