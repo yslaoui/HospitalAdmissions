@@ -4,7 +4,7 @@ import pandas as pd
 
 
 
-file_path = '/home/quantumleap/Documents/git/uol/course/4_Level6S1/django/midterm/work/healthcare_dataset.csv'
+file_path = '/home/quantumleap/Documents/git/uol/course/4_Level6S1/django/midterm/work/database/csv/healthcare_dataset.csv'
 
 def factorize_column_and_save_csv(df, column_name):
     """
@@ -23,7 +23,7 @@ def factorize_column_and_save_csv(df, column_name):
     unique_df = df[[id_column, column_name]].drop_duplicates().reset_index(drop=True)
 
     # Export the new DataFrame to CSV
-    output_path = f'/home/quantumleap/Documents/git/uol/course/4_Level6S1/django/midterm/work/lookupTables/{column_name}.csv'
+    output_path = f'/home/quantumleap/Documents/git/uol/course/4_Level6S1/django/midterm/work/database/csv/lookupTables/{column_name}.csv'
     unique_df.to_csv(output_path, index=False)
 
     return unique_df
@@ -87,7 +87,7 @@ df = df[cols]
 
 
 # Save the DataFrame with the new 'PatientID' and 'AdmissionID' columns to a new CSV file
-output_csv_file_path = '/home/quantumleap/Documents/git/uol/course/4_Level6S1/django/midterm/work/healthcare_dataset_with_pks.csv'  # Replace with the desired output file path
+output_csv_file_path = '/home/quantumleap/Documents/git/uol/course/4_Level6S1/django/midterm/work/database/csv/healthcare_dataset_with_pks.csv'  # Replace with the desired output file path
 df.to_csv(output_csv_file_path, index=False)
 
 
