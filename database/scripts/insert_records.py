@@ -8,16 +8,29 @@ medications = set()
 genders = set()
 blood_types = set()
 insurances = set()
+admission_types = set()
+test_results = set()
+test_results = set()
+medical_conditions = set()
+hospitals = set()
+doctors = set()
+
 
 # Populate data structures
 with open(data_file) as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=',') # csv_reader is an object that allows you to iterate over rows of your data. Each row is a list of values
     header = csv_reader.__next__() # skip the header
     for row in csv_reader:
-        medications.add(row[13])
         genders.add(row[2])
         blood_types.add(row[3])
+        medical_conditions.add(row[4])
+        doctors.add(row[6])
+        hospitals.add(row[7])
         insurances.add(row[8])
+        admission_types.add(row[11])
+        medications.add(row[13])
+        test_results.add(row[14])
+
 
 
 
@@ -38,7 +51,11 @@ if db_connection is not None and db_connection.is_connected():
         cursor.execute("DELETE FROM genders")
         cursor.execute("DELETE FROM blood_types")
         cursor.execute("DELETE FROM insurances")
-
+        cursor.execute("DELETE FROM admission_types")
+        cursor.execute("DELETE FROM test_results")
+        cursor.execute("DELETE FROM medical_conditions")
+        cursor.execute("DELETE FROM doctors")
+        cursor.execute("DELETE FROM hospitals")
 
         # Insert data in lookup tables
         for elem in medications:
@@ -52,8 +69,22 @@ if db_connection is not None and db_connection.is_connected():
             cursor.execute(query, (elem,))   
         for elem in insurances:
             query = "INSERT INTO insurances (insurance) VALUES (%s)"
+            cursor.execute(query, (elem,))       
+        for elem in admission_types:
+            query = "INSERT INTO admission_types (admission_type) VALUES (%s)"
+            cursor.execute(query, (elem,))  
+        for elem in test_results:
+            query = "INSERT INTO test_results (test_result) VALUES (%s)"
+            cursor.execute(query, (elem,))  
+        for elem in medical_conditions:
+            query = "INSERT INTO medical_conditions (medical_condition) VALUES (%s)"
+            cursor.execute(query, (elem,))
+        for elem in doctors:
+            query = "INSERT INTO doctors (doctor) VALUES (%s)"
+            cursor.execute(query, (elem,)) 
+        for elem in hospitals:
+            query = "INSERT INTO hospitals (hospital) VALUES (%s)"
             cursor.execute(query, (elem,))        
-       
         #Commit the changes in the database
         db_connection.commit()
         
