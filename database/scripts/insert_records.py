@@ -6,9 +6,6 @@ import pandas as pd
 data_file = '../csv/healthcare_dataset_with_pks.csv'
 
 # Initialize data structures
-    #Mother table
-admissions = defaultdict(list)
-patients = defaultdict(dict)
 
     #Lookup tables
 medications = set()
@@ -22,6 +19,11 @@ medical_conditions = set()
 hospitals = set()
 doctors = set()
 
+    #Mother table
+admissions = defaultdict(list)
+    #Transitive table
+patients = defaultdict(dict)
+
     # #TODOForeign key dictionaries
 
 
@@ -31,11 +33,6 @@ with open(data_file) as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=',') # csv_reader is an object that allows you to iterate over rows of your data. Each row is a list of values
     header = csv_reader.__next__() # skip the header
     for row in csv_reader:
-        #mother table
-        patients[row[0]]['name'] = row[3]
-        patients[row[0]]['age'] = row[4]
-        patients[row[0]]['gender'] = row[5]
-        patients[row[0]]['blood_type'] = row[6]
         #lookup tables
         genders.add(row[5])
         blood_types.add(row[6])
@@ -46,9 +43,24 @@ with open(data_file) as csv_file:
         admission_types.add(row[14])
         medications.add(row[16])
         test_results.add(row[17])
+        #transitive table
+        patients[row[0]]['name'] = row[3]
+        patients[row[0]]['age'] = row[4]
+        patients[row[0]]['gender'] = row[5]
+        patients[row[0]]['blood_type'] = row[6]
+        #mother table [patientID, medical condition, date of admission, doctor, hospital, insurance, billing amount, room number, admission type, discharge date, medication, test results]
+        admissions[row[1]] = [row[0]] + [row[7]] + [row[8]] + [row[9]] + [row[10]] + [row[11]] + [row[12]] + [row[13]] + [row[14]] + [row[15]] + [row[16]]+ [row[17]]    
 
-print(patients)
+# 10000': ['10000', 'Arthritis', '2023-03-22', 
+#           'Tasha Avila', 'Torres, Young and Stewart', 
+#           'Aetna', '37223.965864725855', '290', 
+#           'Emergency', '2023-04-15', 'Penicillin', 
+#           'Abnormal']})
 
+
+
+print(admissions)
+print('the 10th element is' + admissions['10000'][1])
 # Get the database connection
 db_connection = get_db_connection()
 
@@ -70,6 +82,7 @@ if db_connection is not None and db_connection.is_connected():
         cursor.execute("DELETE FROM doctors")
         cursor.execute("DELETE FROM hospitals")
         cursor.execute("DELETE FROM patients")
+        cursor.execute("DELETE FROM admissions")
 
         # reset the id
         cursor.execute("ALTER TABLE medications AUTO_INCREMENT = 1")
@@ -82,6 +95,7 @@ if db_connection is not None and db_connection.is_connected():
         cursor.execute("ALTER TABLE doctors AUTO_INCREMENT = 1")
         cursor.execute("ALTER TABLE hospitals AUTO_INCREMENT = 1")
         cursor.execute("ALTER TABLE patients AUTO_INCREMENT = 1")
+        cursor.execute("ALTER TABLE admissions AUTO_INCREMENT = 1")
 
         # Insert data in lookup tables
         for elem in medications:
@@ -124,6 +138,13 @@ if db_connection is not None and db_connection.is_connected():
                                    patients[key]['gender'], 
                                    patients[key]['blood_type']
                                    ))   
+            
+        # Insert data in admissions table
+        for key in admissions.keys():
+            query = '''INSERT INTO admissions 
+                       (date_of_admission, billing_amount, discharge_date, room_number)
+                       VALUES (%s, %s, %s, %s)'''
+            cursor.execute(query, (admissions[key][2], admissions[key][7], admissions[key][9], admissions[key][7] ))
         #Commit the changes in the database
         db_connection.commit()
         
