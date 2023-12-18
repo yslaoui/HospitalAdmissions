@@ -26,6 +26,7 @@ if db_connection is not None and db_connection.is_connected():
             CREATE TABLE IF NOT EXISTS patients (
                 id INT PRIMARY KEY AUTO_INCREMENT,
                 name VARCHAR(50),
+                age INT,
                 gender_id INT,
                 blood_type_id INT,
                 FOREIGN KEY (gender_id) REFERENCES genders (id) ON DELETE CASCADE,
