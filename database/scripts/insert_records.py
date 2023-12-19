@@ -51,11 +51,7 @@ with open(data_file) as csv_file:
         #mother table [patientID, medical condition, date of admission, doctor, hospital, insurance, billing amount, room number, admission type, discharge date, medication, test results]
         admissions[row[1]] = [row[0]] + [row[7]] + [row[8]] + [row[9]] + [row[10]] + [row[11]] + [row[12]] + [row[13]] + [row[14]] + [row[15]] + [row[16]]+ [row[17]]    
 
-# 10000': ['10000', 'Arthritis', '2023-03-22', 
-#           'Tasha Avila', 'Torres, Young and Stewart', 
-#           'Aetna', '37223.965864725855', '290', 
-#           'Emergency', '2023-04-15', 'Penicillin', 
-#           'Abnormal']})
+
 
 
 
@@ -142,13 +138,30 @@ if db_connection is not None and db_connection.is_connected():
         # Insert data in admissions table
         for key in admissions.keys():
             query = '''INSERT INTO admissions 
-                       (date_of_admission, billing_amount, discharge_date, room_number)
-                       VALUES (%s, %s, %s, %s)'''
-            cursor.execute(query, (admissions[key][2], admissions[key][7], admissions[key][9], admissions[key][7] ))
+                       (date_of_admission, billing_amount, discharge_date, room_number, patient_id, hospital_id, doctor_id, medication_id, insurance_id, admission_type_id, test_result_id, medical_condition_id)
+                       VALUES (%s, %s, %s, %s, %s,
+                       (SELECT id FROM hospitals WHERE hospital=%s),
+                       (SELECT id FROM doctors WHERE doctor=%s),
+                       (SELECT id FROM medications WHERE medication=%s),
+                       (SELECT id FROM insurances WHERE insurance=%s),
+                       (SELECT id FROM admission_types WHERE admission_type=%s),
+                       (SELECT id FROM test_results WHERE test_result=%s),
+                       (SELECT id FROM medical_conditions WHERE medical_condition=%s) 
+                       )'''
+            cursor.execute(query, (admissions[key][2], admissions[key][6], admissions[key][9], admissions[key][7], admissions[key][0], admissions[key][4], admissions[key][3], admissions[key][10], admissions[key][5], admissions[key][8], admissions[key][11], admissions[key][1] ))
         #Commit the changes in the database
         db_connection.commit()
         
     finally:
-        # Ensure that the connection is closed
         db_connection.close()
         print("MySQL connection is closed")
+
+# 10000': ['10000', 'Arthritis', '2023-03-22', 
+#           'Tasha Avila', 'Torres, Young and Stewart', 
+#           'Aetna', '37223.965864725855', '290', 
+#           'Emergency', '2023-04-15', 'Penicillin', 
+#           'Abnormal']})
+
+
+
+

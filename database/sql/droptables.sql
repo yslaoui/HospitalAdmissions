@@ -9,3 +9,18 @@ DROP TABLE insurance;
 DROP TABLE medical_conditions;
 DROP TABLE medications;       
 DROP TABLE test_results; 
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
