@@ -64,8 +64,7 @@ class Patient(models.Model):
     blood_type = models.ForeignKey(BloodType, null=True, on_delete=models.SET_NULL)
     
     def __str__(self) :
-        patient_id = 'patient' + str(self.id) 
-        return patient_id
+        return self.name
 
 class Admission(models.Model):
     date_of_admission = models.DateField(null=False, blank=False)
@@ -85,3 +84,10 @@ class Admission(models.Model):
         admission_id = 'admissions' + str(self.id)
         return admission_id
 
+# class PatientMedicationLink(models.Model):
+#     patient = models.ForeignKey(Patient, on_delete=models.DO_NOTHING)
+#     medication = models.ForeignKey(Medication, on_delete=models.DO_NOTHING)
+    
+# class GeneAttributeLink(models.Model):
+#     gene = models.ForeignKey(Gene, on_delete=models.DO_NOTHING) 
+#     attribute = models.ForeignKey(Attribute, on_delete=models.DO_NOTHING)    
