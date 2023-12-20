@@ -1,0 +1,23 @@
+PatientID,AdmissionID,Date of Birth,Name,Age,Gender,Blood Type,Medical Condition,Date of Admission,Doctor,Hospital,Insurance Provider,Billing Amount,Room Number,Admission Type,Discharge Date,Medication,Test Results,PatientConcatenate
+1,1,1941-11-17,Tiffany Ramirez,81,Female,O-,Diabetes,2022-11-17,Patrick Parker,Wallace-Hamilton,Medicare,37490.9833635282,146,Elective,2022-12-01,Aspirin,Inconclusive,Tiffany Ramirez_Female_O-_1941-11-17
+2,2,1988-06-01,Ruben Burns,35,Male,O+,Asthma,2023-06-01,Diane Jackson,"Burke, Griffin and Cooper",UnitedHealthcare,47304.0648454751,404,Emergency,2023-06-15,Lipitor,Normal,Ruben Burns_Male_O+_1988-06-01
+3,3,1958-01-09,Chad Byrd,61,Male,B-,Obesity,2019-01-09,Paul Baker,Walton LLC,Medicare,36874.8969966128,292,Emergency,2019-02-08,Lipitor,Normal,Chad Byrd_Male_B-_1958-01-09
+4,4,1971-05-02,Antonio Frederick,49,Male,B-,Asthma,2020-05-02,Brian Chandler,Garcia Ltd,Medicare,23303.3220921969,480,Urgent,2020-05-03,Penicillin,Abnormal,Antonio Frederick_Male_B-_1971-05-02
+5,5,1970-07-09,Mrs. Brandy Flowers,51,Male,O-,Arthritis,2021-07-09,Dustin Griffin,"Jones, Brown and Murray",UnitedHealthcare,18086.3441835639,477,Urgent,2021-08-02,Paracetamol,Normal,Mrs. Brandy Flowers_Male_O-_1970-07-09
+6,6,1979-08-20,Patrick Parker,41,Male,AB+,Arthritis,2020-08-20,Robin Green,Boyd PLC,Aetna,22522.3633848533,180,Urgent,2020-08-23,Aspirin,Abnormal,Patrick Parker_Male_AB+_1979-08-20
+7,7,1939-03-22,Charles Horton,82,Male,AB+,Hypertension,2021-03-22,Patricia Bishop,"Wheeler, Bryant and Johns",Cigna,39593.4357611308,161,Urgent,2021-04-15,Lipitor,Abnormal,Charles Horton_Male_AB+_1939-03-22
+8,8,1964-05-16,Patty Norman,55,Female,O-,Arthritis,2019-05-16,Brian Kennedy,Brown Inc,Blue Cross,13546.8172493648,384,Elective,2019-06-02,Aspirin,Normal,Patty Norman_Female_O-_1964-05-16
+9,9,1987-12-17,Ryan Hayes,33,Male,A+,Diabetes,2020-12-17,Kristin Dunn,"Smith, Edwards and Obrien",Aetna,24903.0372697387,215,Elective,2020-12-22,Aspirin,Abnormal,Ryan Hayes_Male_A+_1987-12-17
+10,10,1983-12-15,Sharon Perez,39,Female,O-,Asthma,2022-12-15,Jessica Bailey,Brown-Golden,Blue Cross,22788.2360263768,310,Urgent,2022-12-16,Aspirin,Normal,Sharon Perez_Female_O-_1983-12-15
+11,11,1976-04-13,Amy Roberts,45,Male,B-,Cancer,2021-04-13,Anthony Roberts,Little-Spencer,Aetna,40325.071393983,306,Emergency,2021-05-11,Penicillin,Abnormal,Amy Roberts_Male_B-_1976-04-13
+12,12,1996-06-09,Mrs. Caroline Farrell,23,Female,O-,Hypertension,2019-06-09,William Miller,Rose Inc,Medicare,6185.90352955285,126,Emergency,2019-06-26,Paracetamol,Inconclusive,Mrs. Caroline Farrell_Female_O-_1996-06-09
+13,13,1936-11-29,Christina Williams,85,Female,A+,Diabetes,2021-11-29,Laura Roberts,"Malone, Thompson and Mejia",Aetna,4835.94564952541,444,Elective,2021-12-14,Aspirin,Inconclusive,Christina Williams_Female_A+_1936-11-29
+14,14,1949-07-29,William Page,72,Female,A+,Diabetes,2021-07-29,James Carney,Richardson-Powell,Cigna,13669.3777441649,492,Elective,2021-08-14,Aspirin,Normal,William Page_Female_A+_1949-07-29
+15,15,1956-06-05,Michael Bradshaw,65,Female,AB+,Cancer,2021-06-05,Katherine Lowe,Castaneda-Hardy,Cigna,10342.8361235274,120,Emergency,2021-06-25,Ibuprofen,Inconclusive,Michael Bradshaw_Female_AB+_1956-06-05
+16,16,1989-08-07,Brian Dorsey,32,Female,O+,Arthritis,2021-08-07,Curtis Smith,Burch-White,Aetna,27174.9429062325,492,Emergency,2021-08-14,Aspirin,Inconclusive,Brian Dorsey_Female_O+_1989-08-07
+17,17,1955-11-15,Olivia Gonzalez,64,Male,AB-,Diabetes,2019-11-15,Clayton Mcknight,Cunningham and Sons,Aetna,17394.9942644532,315,Elective,2019-12-04,Aspirin,Inconclusive,Olivia Gonzalez_Male_AB-_1955-11-15
+18,18,1999-03-08,Teresa Caldwell,23,Male,A+,Arthritis,2022-03-08,Debra Meyers,"Bell, Mcknight and Willis",Medicare,45213.5376264196,475,Elective,2022-03-16,Ibuprofen,Inconclusive,Teresa Caldwell_Male_A+_1999-03-08
+19,19,1956-06-19,Desiree Williams MD,66,Male,O+,Obesity,2022-06-19,Megan Sanders,Pugh-Rogers,UnitedHealthcare,4262.91157816964,125,Elective,2022-06-29,Aspirin,Inconclusive,Desiree Williams MD_Male_O+_1956-06-19
+20,20,1939-07-10,Sally Shaw,80,Male,O-,Arthritis,2019-07-10,Zachary Horton DDS,"Rush, Owens and Johnson",Blue Cross,16609.3118174499,366,Emergency,2019-08-07,Ibuprofen,Inconclusive,Sally Shaw_Male_O-_1939-07-10
+20,21,1939-07-10,Sally Shaw,80,Male,O-,Arthritis,2021-06-05,Laura Roberts,"Rush, Owens and Johnson",Blue Cross,16609.3118174499,366,Emergency,2019-08-07,Aspirin,Normal,Sally Shaw_Male_O-_1939-07-10
+8,22,1964-05-16,Patty Norman,55,Female,O-,Hypertension,2023-06-01,Dustin Griffin,Brown Inc,Blue Cross,37490.9833635282,874,Emergency,2019-06-02,Paracetamol,Abnormal,Patty Norman_Female_O-_1964-05-16

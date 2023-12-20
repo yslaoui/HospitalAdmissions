@@ -6,7 +6,6 @@ import pandas as pd
 data_file = '../csv/healthcare_dataset_with_pks.csv'
 
 # Initialize data structures
-
     #Lookup tables
 medications = set()
 genders = set()
@@ -23,10 +22,6 @@ doctors = set()
 admissions = defaultdict(list)
     #Transitive table
 patients = defaultdict(dict)
-
-    # #TODOForeign key dictionaries
-
-
 
 # Populate data structures
 with open(data_file) as csv_file:
@@ -50,9 +45,6 @@ with open(data_file) as csv_file:
         patients[row[0]]['blood_type'] = row[6]
         #mother table [patientID, medical condition, date of admission, doctor, hospital, insurance, billing amount, room number, admission type, discharge date, medication, test results]
         admissions[row[1]] = [row[0]] + [row[7]] + [row[8]] + [row[9]] + [row[10]] + [row[11]] + [row[12]] + [row[13]] + [row[14]] + [row[15]] + [row[16]]+ [row[17]]    
-
-
-
 
 
 print(admissions)

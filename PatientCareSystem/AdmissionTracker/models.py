@@ -62,7 +62,8 @@ class Patient(models.Model):
     age = models.IntegerField(null=False, blank=False)
     gender = models.ForeignKey(Gender, null=True, on_delete=models.SET_NULL)
     blood_type = models.ForeignKey(BloodType, null=True, on_delete=models.SET_NULL)
-    
+    medication = models.ManyToManyField(Medication, through="PatientMedicationLink", null=True, blank=True)
+
     def __str__(self) :
         return self.name
 
@@ -84,9 +85,9 @@ class Admission(models.Model):
         admission_id = 'admissions' + str(self.id)
         return admission_id
 
-# class PatientMedicationLink(models.Model):
-#     patient = models.ForeignKey(Patient, on_delete=models.DO_NOTHING)
-#     medication = models.ForeignKey(Medication, on_delete=models.DO_NOTHING)
+class PatientMedicationLink(models.Model):
+    patient = models.ForeignKey(Patient, on_delete=models.DO_NOTHING)
+    medication = models.ForeignKey(Medication, on_delete=models.DO_NOTHING)
     
 # class GeneAttributeLink(models.Model):
 #     gene = models.ForeignKey(Gene, on_delete=models.DO_NOTHING) 

@@ -2,6 +2,11 @@ from django.contrib import admin
 from .models import *
 # Register your models here.
 
+
+class PatientMedicationLinkInLine(admin.TabularInline):
+    model = PatientMedicationLink
+    extra = 5
+
 class AdmissionAdmin(admin.ModelAdmin):
    list_display = ('date_of_admission', 'room_number', 'billing_amount',
                    'discharge_date', 'patient', 'hospital',
@@ -11,6 +16,8 @@ class AdmissionAdmin(admin.ModelAdmin):
 class PatientAdmin(admin.ModelAdmin):
    list_display = ('name', 'age', 'gender',
                    'blood_type')
+   inlines = [PatientMedicationLinkInLine]
+
 
 class TestResultAdmin(admin.ModelAdmin):
    list_display = ('test_result',)
