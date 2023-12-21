@@ -1,0 +1,50 @@
+@host = http://127.0.0.1:8080/api
+### Get list of items
+GET {{host}}/bloodtypes
+
+### Get 3rd medication
+GET {{host}}/medicalconditions/3
+
+### Get 10th patient
+GET {{host}}/patients/8
+
+### Get 20th admission
+GET {{host}}/admissions/3
+
+
+### Create a new admission
+POST {{host}}/admissions
+Content-Type: application/json
+
+{
+    "date_of_admission": "2023-12-14",
+    "room_number": "263",
+    "billing_amount": "666666",
+    "discharge_date": "2023-12-27",
+    "patient": "2",
+    "hospital": "15",
+    "doctor": "17",
+    "medication": "3",
+    "insurance": "3",
+    "admission_type": "1",
+    "test_result": "3",
+    "medical_condition": "4"
+}
+
+### Update an existing patient
+PUT {{host}}/patients/1
+Content-Type: application/json
+
+{
+    "id": 1,
+    "name": "Yasmina Zelensky",
+    "age": 51,
+    "gender": 1,
+    "blood_type": 6,
+    "medication": [
+        4
+    ]
+}
+
+### Delete an admission record
+DELETE {{host}}/admissions/15

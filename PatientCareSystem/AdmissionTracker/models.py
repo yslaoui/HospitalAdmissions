@@ -64,6 +64,7 @@ class Patient(models.Model):
     blood_type = models.ForeignKey(BloodType, null=True, on_delete=models.SET_NULL)
     medication = models.ManyToManyField(Medication, through="PatientMedicationLink", null=True, blank=True)
 
+
     def __str__(self) :
         return self.name
 
