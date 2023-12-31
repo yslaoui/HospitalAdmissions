@@ -44,19 +44,31 @@ class BloodTypeSerializer(serializers.ModelSerializer):
        fields = ['id','blood_type']
 
 class AdmissionTypeSerializer(serializers.ModelSerializer):
+   
    class Meta:
        model = AdmissionType
        fields = ['id','admission_type']
 
 class PatientSerializer(serializers.ModelSerializer):
-   class Meta:
-       model = Patient
-       fields = ['id','name', 'age', 'gender', 
-                 'blood_type', 'medication']
+    gender = GenderSerializer(read_only=True)
+    blood_type = BloodTypeSerializer(read_only=True)
+    medication = MedicationSerializer(many=True, read_only=True)
+    class Meta:
+        model = Patient
+        fields = ['id','name', 'age', 'gender', 
+                    'blood_type', 'medication']
 
 
 
 class AdmissionSerializer(serializers.ModelSerializer):
+    patient = PatientSerializer(read_only=True)
+    hospital = HospitalSerializer(read_only=True)
+    doctor = DoctorSerializer(read_only=True)
+    medication = MedicationSerializer(read_only=True)
+    insurance = InsuranceSerializer(read_only=True)
+    admission_type = AdmissionTypeSerializer(read_only=True)
+    test_result = TestResultSerializer(read_only=True)
+    medical_condition = MedicalConditionSerializer(read_only=True)
     class Meta:
         model = Admission
         fields = ['id', 'date_of_admission', 'room_number',
