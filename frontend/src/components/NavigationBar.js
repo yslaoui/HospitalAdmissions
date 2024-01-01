@@ -9,9 +9,9 @@ const NavigationBar = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto ms-3">
-            <Nav.Link href="#home" className="fs-6">Home</Nav.Link>
-            <Nav.Link href="#users" className="fs-6">Users</Nav.Link>
-            <Nav.Link href="#login" className="fs-6">Login</Nav.Link>
+            <Nav.Link href="/admissions" className="fs-6">Admissions</Nav.Link>
+            <Nav.Link href="#users" className="fs-6">Patients</Nav.Link>
+            <Nav.Link href="#login" className="fs-6">Medications</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

@@ -1,4 +1,4 @@
-import services from '../services/services'
+import services from '../services/patientServices'
 import {Form, Button } from 'react-bootstrap'
 
 
