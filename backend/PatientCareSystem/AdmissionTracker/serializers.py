@@ -50,13 +50,31 @@ class AdmissionTypeSerializer(serializers.ModelSerializer):
        fields = ['id','admission_type']
 
 class PatientSerializer(serializers.ModelSerializer):
-    gender = GenderSerializer(read_only=True)
+    gender = GenderSerializer(read_only=False)
     blood_type = BloodTypeSerializer(read_only=True)
     medication = MedicationSerializer(many=True, read_only=True)
     class Meta:
         model = Patient
         fields = ['id','name', 'age', 'gender', 
                     'blood_type', 'medication']
+
+
+    def create(self, validated_data):
+        '''
+        Needed for all foreign keys.
+        read_only=False allows POST and PUT request to change data on server
+        By default create method does not support nested data.
+        Nested data are better than flat data for front end because it needs the id as key for elements
+        therefore we must override create()
+        '''
+        gender_data = self.initial_data["gender"]
+        blood_type = self.initial_data["blood_type"]
+        patient = Patient(**{**validated_data, 
+                        'gender': Gender.objects.get(pk=gender_data['id']),
+                        'blood_type': BloodType.objects.get(pk=gender_data['id']) 
+                        })
+        patient.save()
+        return patient
 
 
 

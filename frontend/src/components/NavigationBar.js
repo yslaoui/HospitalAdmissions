@@ -12,6 +12,7 @@ const NavigationBar = () => {
             <Nav.Link href="/admissions" className="fs-6">Admissions</Nav.Link>
             <Nav.Link href="#users" className="fs-6">Patients</Nav.Link>
             <Nav.Link href="#login" className="fs-6">Medications</Nav.Link>
+            <Nav.Link href="/addPatient" className="fs-6">Add a patient</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
@@ -20,3 +21,5 @@ const NavigationBar = () => {
 };
 
 export default NavigationBar;
+
+// 
