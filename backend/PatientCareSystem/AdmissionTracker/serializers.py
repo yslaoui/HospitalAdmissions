@@ -51,7 +51,7 @@ class AdmissionTypeSerializer(serializers.ModelSerializer):
 
 class PatientSerializer(serializers.ModelSerializer):
     gender = GenderSerializer(read_only=False)
-    blood_type = BloodTypeSerializer(read_only=True)
+    blood_type = BloodTypeSerializer(read_only=False)
     medication = MedicationSerializer(many=True, read_only=True)
     class Meta:
         model = Patient
@@ -67,16 +67,44 @@ class PatientSerializer(serializers.ModelSerializer):
         Nested data are better than flat data for front end because it needs the id as key for elements
         therefore we must override create()
         '''
+        
         gender_data = self.initial_data["gender"]
-        blood_type = self.initial_data["blood_type"]
+        blood_type_data = self.initial_data["blood_type"]
+        medication_data = self.initial_data["medication"]
+
+        # One to many relationship
         patient = Patient(**{**validated_data, 
                         'gender': Gender.objects.get(pk=gender_data['id']),
-                        'blood_type': BloodType.objects.get(pk=gender_data['id']) 
+                        'blood_type': BloodType.objects.get(pk=blood_type_data['id']) 
                         })
-        patient.save()
+        patient.save() # save before you tacke many to many relationships
+
+        # # many to many relationships
+        medication_ids = [medication["id"] for medication in medication_data]
+        for medication_id in medication_ids:
+            medication_obj = Medication.objects.get(pk = medication_id)
+            patient.medication.add(medication_obj)
+
         return patient
 
 
+
+    # def create(self, validated_data):
+    #     '''
+    #     Needed for all foreign keys.
+    #     read_only=False allows POST and PUT request to change data on server
+    #     By default create method does not support nested data.
+    #     Nested data are better than flat data for front end because it needs the id as key for elements
+    #     therefore we must override create()
+    #     '''
+    #     gender_data = self.initial_data["gender"]
+    #     blood_type = self.initial_data["blood_type"]
+    #     patient = Patient(**{**validated_data, 
+    #                     'gender': Gender.objects.get(pk=gender_data['id']),
+    #                     'blood_type': BloodType.objects.get(pk=gender_data['id']) 
+    #                     })
+    #     patient.save()
+    #     return patient
 
 class AdmissionSerializer(serializers.ModelSerializer):
     patient = PatientSerializer(read_only=True)

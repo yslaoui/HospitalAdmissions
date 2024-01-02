@@ -9,23 +9,24 @@ import medicationServices from '../services/medicationServices'
 
 const PatientForm = (props) => {
     const [patients, setPatients] = useState([])  
+   
+    // Attributes with no foreign relationships
     const [newName, setnewName] = useState('')
-
     const [newAge, setnewAge] = useState('')
     
+
     const [genders, setGenders] = useState([])
-    const [newGender, setnewGender] = useState('Male')
-    const [selectedGender, setSelectedGender] = useState({})
+    const [newGender, setnewGender] = useState('')
 
     const [blood_types, setBlood_types] = useState([])
     const [newBlood_type, setNewBlood_type] = useState('')
-    const [selectedBloodType, setselectedBloodType] = useState({})
     
 
-
     const [medications, setMedications] = useState([])
-    const [newMedication, setNewMedication] = useState('Aspegic')
-  
+    const [newMedication1, setNewMedication1] = useState('Aspegic')
+    const [newMedication2, setNewMedication2] = useState('Aspegic')
+    
+    
     useEffect(()=> {
         // Populating the state variables that hold the whole records for every model
         patientServices
@@ -53,24 +54,33 @@ const PatientForm = (props) => {
     
     const handleSubmit = (event) => {
       event.preventDefault()
+      
+      // One to many foreign relationships
+      const selectedGender = genders.find(x => x.gender == newGender)
+      const selectedBloodType = blood_types.find(x => x.blood_type == newBlood_type)
+      
+      // Many to many patient vs. medication foreign relationship
+      const medication1 = medications.find(x => x.medication == newMedication1)
+      const medication2 = medications.find(x => x.medication == newMedication2)
+      const manySelectedMedications = [].concat(medication1, medication2)  
+
       const newPatient = {
         id: patients.length + 1,
         name: newName, 
         age: newAge, 
         gender: selectedGender, 
         blood_type: selectedBloodType, 
-        medication: newMedication 
+        medication: manySelectedMedications 
       }
       patientServices
         .insert(newPatient)
         .then(response => {
-          console.log(response.data)
-          console.log(newPatient)
           setnewName('')
           setnewAge('')
-          setNewMedication('')
-          setBlood_types([])
-
+          setnewGender("")
+          setNewBlood_type("")
+          setNewMedication1('')
+          setNewMedication2('')
         })
   
     }
@@ -84,17 +94,19 @@ const PatientForm = (props) => {
     }
 
     const changeGender = (event) => {
-        setSelectedGender(genders.find(x => x.gender == event.target.value ))
         setnewGender(event.target.value)
     }
 
     const changeBlood_type = (event) => {
-      setselectedBloodType(blood_types.find(x => x.blood_type == event.target.value ))
       setNewBlood_type(event.target.value)
     }
 
-    const changeMedication = (event) => {
-      setNewMedication(event.target.value)
+    const changeMedication1 = (event) => {
+      setNewMedication1(event.target.value)
+    }
+
+    const changeMedication2 = (event) => {
+      setNewMedication2(event.target.value)
     }
 
 
@@ -145,13 +157,25 @@ const PatientForm = (props) => {
             </Form.Group>
 
 
-
             <Form.Group>
-              <Form.Label> Medication:  </Form.Label>
+              <Form.Label> Medication 1:  </Form.Label>
               <Form.Control 
                 as = "select"
-                value = {newMedication}
-                onChange={changeMedication}>
+                value = {newMedication1}
+                onChange={changeMedication1}>
+                    {medications.map(medication => (
+                        <option key={medication.id} value={medication.medication}>{medication.medication}</option>
+                    )
+                    )}
+              </Form.Control>
+            </Form.Group> 
+
+            <Form.Group>
+              <Form.Label> Medication 2:  </Form.Label>
+              <Form.Control 
+                as = "select"
+                value = {newMedication2}
+                onChange={changeMedication2}>
                     {medications.map(medication => (
                         <option key={medication.id} value={medication.medication}>{medication.medication}</option>
                     )
