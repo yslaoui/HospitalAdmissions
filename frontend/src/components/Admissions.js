@@ -2,6 +2,7 @@ import admissionServices from '../services/admissionServices'
 import Table from 'react-bootstrap/Table';
 import { Link, redirectDocument } from 'react-router-dom';
 import { useEffect, useState } from 'react'
+import {Form, Button } from 'react-bootstrap'
 
 
 
@@ -16,6 +17,26 @@ const Admissions = (props) => {
           setAdmissions(response.data)
         })
      }, [])
+
+     const handleDelete = (id) => {
+      console.log(`Deleting ${id}`)
+      const resourceURL = ` http://127.0.0.1:8080/api/admissions/${id}`
+      const resourceToDelete = admissions.find(x => x.id==id)
+      console.log(resourceURL)
+      console.log(resourceToDelete)
+      if (window.confirm( `Delete admission number ${resourceToDelete.id} for patient ${resourceToDelete.patient.name} ? `))
+        admissionServices
+         .destroy(resourceURL)
+         .then(response => {
+            window.location.reload()
+            console.log(` successfully deleted resource ${response}`)
+         }) 
+         .catch(error => {
+          console.log(`error deleting resource ${error}`)
+         })
+      
+        console.log(`great`)
+    } 
   
   
     return (
@@ -24,6 +45,7 @@ const Admissions = (props) => {
         <Table striped>
           <tbody>
             <tr>
+              <th> Action</th>
               <th> Patient name</th>
               <th> medical Condition</th>
               <th> Date of admission</th>
@@ -40,6 +62,12 @@ const Admissions = (props) => {
               return(
                 <tr key={elem.id}>
                   <td> 
+                    <Button variant='primary' type="submit" >Update</Button> 
+                    <Button variant='danger' type="submit"onClick={()=>handleDelete(elem.id)} >Delete</Button> 
+                    
+                    </td>
+
+                  <td> 
                     <Link to={`/patients/${elem.patient.id}`}> {elem.patient.name}   </Link>    
                   </td>
                   <td> {elem.medical_condition.medical_condition}</td>
@@ -51,7 +79,7 @@ const Admissions = (props) => {
                   <td> {elem.admission_type.admission_type} </td>
                   <td> {elem.discharge_date} </td>
                   <td> {elem.medication.medication} </td>
-                  <tD> {elem.test_result.test_result} </tD>
+                  <td> {elem.test_result.test_result} </td>
               </tr>
               )
             })}

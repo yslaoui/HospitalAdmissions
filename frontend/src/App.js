@@ -5,6 +5,9 @@ import PatientDetail from './components/PatientDetail';
 import Admissions from './components/Admissions'
 import MedicationForm from './components/MedicationForm'
 import PatientForm from './components/PatientForm'
+import Patients from './components/Patients'
+
+
 
 const App = () => {
   return (
@@ -13,6 +16,7 @@ const App = () => {
         <Route path="/" element={<Home/>} />
         <Route path="/patients/:id" element={<PatientDetail/>} />
         <Route path="/admissions" element={<Admissions/>} />
+        <Route path="/patients" element={<Patients/>} />
         <Route path="/addMedication" element={<MedicationForm/>} />
         <Route path="/addPatient" element={<PatientForm/>} />
 

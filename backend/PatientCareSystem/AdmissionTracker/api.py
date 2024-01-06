@@ -249,8 +249,6 @@ class AdmissionTypeDetail(generics.GenericAPIView,
     def delete(self, request, *args, **kwargs):
         return self.destroy(request, *args, **kwargs)
 
-
-
 class PatientList(generics.ListCreateAPIView):
    queryset = Patient.objects.all()
    serializer_class = PatientSerializer
@@ -278,7 +276,6 @@ class PatientDetail(generics.GenericAPIView,
 
    def delete(self, request, *args, **kwargs):
        return self.destroy(request, *args, **kwargs)
-
 
 
 class AdmissionList(generics.ListCreateAPIView):

@@ -5,27 +5,33 @@ import bloodTypeServices from '../services/bloodTypeServices'
 import {Form, Button } from 'react-bootstrap'
 import { useEffect, useState, React } from 'react'
 import medicationServices from '../services/medicationServices'
+import { useLocation, useNavigate } from 'react-router-dom';
+
 
 
 const PatientForm = (props) => {
+
+    const location = useLocation();
+    const navigate = useNavigate();
+    const [patientToUpdate, setPatientToUpdate] = useState(location.state?.patientToUpdate || {});
+
     const [patients, setPatients] = useState([])  
    
     // Attributes with no foreign relationships
-    const [newName, setnewName] = useState('')
-    const [newAge, setnewAge] = useState('')
+    const [newName, setnewName] = useState(patientToUpdate?.name || '')
+    const [newAge, setnewAge] = useState(patientToUpdate?.age || '')
     
-
+    // Attributes with one to many foreign relationships
     const [genders, setGenders] = useState([])
-    const [newGender, setnewGender] = useState('')
+    const [newGender, setnewGender] = useState(patientToUpdate?.gender?.gender || '')
 
     const [blood_types, setBlood_types] = useState([])
-    const [newBlood_type, setNewBlood_type] = useState('')
+    const [newBlood_type, setNewBlood_type] = useState(patientToUpdate?.blood_type?.blood_type || '')
     
-
+    // Attributes with many to many foreign relationships
     const [medications, setMedications] = useState([])
-    const [newMedication1, setNewMedication1] = useState('Aspegic')
-    const [newMedication2, setNewMedication2] = useState('Aspegic')
-    
+    const [newMedication1, setNewMedication1] = useState(patientToUpdate?.medication?.length > 0 ? patientToUpdate.medication[0].medication : '');
+    const [newMedication2, setNewMedication2] = useState(patientToUpdate?.medication?.length > 1 ? patientToUpdate.medication[0].medication : '');
     
     useEffect(()=> {
         // Populating the state variables that hold the whole records for every model
@@ -49,9 +55,13 @@ const PatientForm = (props) => {
           .then(response => {
             setMedications(response.data)
           })      
-     }, [])
+         
+         // If page is refreshed, the state sent by the update button is forgotten 
+         return () => {
+          navigate('/addPatient', {state: {}})
+         } 
+     }, [navigate])
 
-    
     const handleSubmit = (event) => {
       event.preventDefault()
       
@@ -64,25 +74,53 @@ const PatientForm = (props) => {
       const medication2 = medications.find(x => x.medication == newMedication2)
       const manySelectedMedications = [].concat(medication1, medication2)  
 
-      const newPatient = {
-        id: patients.length + 1,
-        name: newName, 
-        age: newAge, 
-        gender: selectedGender, 
-        blood_type: selectedBloodType, 
-        medication: manySelectedMedications 
-      }
-      patientServices
-        .insert(newPatient)
-        .then(response => {
-          setnewName('')
-          setnewAge('')
-          setnewGender("")
-          setNewBlood_type("")
-          setNewMedication1('')
-          setNewMedication2('')
+      if (patientToUpdate.id) {
+        console.log(`Updating.... `)
+        const changedPerson = {...patientToUpdate, 
+              name: newName,
+              age: newAge,
+              gender: selectedGender, 
+              blood_type: selectedBloodType, 
+              medication: manySelectedMedications     
+            }
+        console.log(changedPerson)
+        const url = `http://127.0.0.1:8080/api/patients/${patientToUpdate.id}`
+        patientServices
+        .update(url, changedPerson)
+        .then(response => {    
+          console.log(`Gut`)
         })
+        .catch(error => {
+          console.log(error)
+        })
+
+      }
+      else {
+        // Creating a new patient
+        console.log(`Creating....`)
+        const newPatient = {
+          id: patients.length + 1,
+          name: newName, 
+          age: newAge, 
+          gender: selectedGender, 
+          blood_type: selectedBloodType, 
+          medication: manySelectedMedications 
+        }
+        console.log(newPatient)
+        patientServices
+          .insert(newPatient)
+          .then(response => {
+            setnewName('')
+            setnewAge('')
+            setnewGender("")
+            setNewBlood_type("")
+            setNewMedication1('')
+            setNewMedication2('')
+          })  
   
+      }
+      
+
     }
   
     const changeName = (event) => {
@@ -135,6 +173,7 @@ const PatientForm = (props) => {
                 as = "select"
                 value = {newGender}
                 onChange={changeGender}>
+                   <option value="">{newGender}</option>
                     {genders.map(gender => (
                         <option key={gender.id} value={gender.gender}>{gender.gender}</option>
                     )
@@ -149,6 +188,7 @@ const PatientForm = (props) => {
                 as = "select"
                 value = {newBlood_type}
                 onChange={changeBlood_type}>
+                  <option value="">{newBlood_type}</option>
                     {blood_types.map(type => (
                         <option key={type.id} value={type.blood_type}>{type.blood_type}</option>
                     )
@@ -163,6 +203,7 @@ const PatientForm = (props) => {
                 as = "select"
                 value = {newMedication1}
                 onChange={changeMedication1}>
+                  <option value="">{newMedication1}</option>
                     {medications.map(medication => (
                         <option key={medication.id} value={medication.medication}>{medication.medication}</option>
                     )
@@ -176,6 +217,7 @@ const PatientForm = (props) => {
                 as = "select"
                 value = {newMedication2}
                 onChange={changeMedication2}>
+                  <option value="">{newMedication2}</option>
                     {medications.map(medication => (
                         <option key={medication.id} value={medication.medication}>{medication.medication}</option>
                     )

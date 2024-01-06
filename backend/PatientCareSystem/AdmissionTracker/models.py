@@ -9,48 +9,48 @@ class TestResult(models.Model):
         return self.test_result
 
 class Medication(models.Model):
-    medication = models.CharField(max_length=50, null=False, blank=False)
+    medication = models.CharField(max_length=50, null=True, blank=False)
     def __str__(self) :
         return self.medication
 
 class MedicalCondition(models.Model):
-    medical_condition = models.CharField(max_length=50, null=False, blank=False)
+    medical_condition = models.CharField(max_length=50, null=True, blank=False)
     def __str__(self) :
         return self.medical_condition
 
 class Insurance(models.Model):
-    insurance = models.CharField(max_length=50, null=False, blank=False)
+    insurance = models.CharField(max_length=50, null=True, blank=False)
     def __str__(self) :
         return self.insurance
    
 
 class Hospital(models.Model):
-    hospital = models.CharField(max_length=50, null=False, blank=False)
+    hospital = models.CharField(max_length=50, null=True, blank=False)
     def __str__(self) :
         return self.hospital
 
 
 class Gender(models.Model):
-    gender = models.CharField(max_length=50, null=False, blank=False)
+    gender = models.CharField(max_length=50, null=True, blank=False)
     def __str__(self) :
         return self.gender
 
 
 class Doctor(models.Model):
-    doctor = models.CharField(max_length=50, null=False, blank=False)
+    doctor = models.CharField(max_length=50, null=True, blank=False)
     def __str__(self) :
         return self.doctor
 
 
 class BloodType(models.Model):
-    blood_type = models.CharField(max_length=50, null=False, blank=False)
+    blood_type = models.CharField(max_length=50, null=True, blank=False)
     def __str__(self) :
         return self.blood_type
 
  
 
 class AdmissionType(models.Model):
-    admission_type = models.CharField(max_length=50, null=False, blank=False)
+    admission_type = models.CharField(max_length=50, null=True, blank=False)
     def __str__(self) :
         return self.admission_type
 
@@ -60,10 +60,9 @@ class AdmissionType(models.Model):
 class Patient(models.Model):
     name = models.CharField(max_length=50, null=False, blank=False)
     age = models.IntegerField(null=False, blank=False)
-    gender = models.ForeignKey(Gender, null=True, on_delete=models.SET_NULL)
-    blood_type = models.ForeignKey(BloodType, null=True, on_delete=models.SET_NULL)
+    gender = models.ForeignKey(Gender, null=True, on_delete=models.DO_NOTHING)
+    blood_type = models.ForeignKey(BloodType, null=True, on_delete=models.DO_NOTHING)
     medication = models.ManyToManyField(Medication, through="PatientMedicationLink", null=True, blank=True)
-
 
     def __str__(self) :
         return self.name
@@ -87,8 +86,8 @@ class Admission(models.Model):
         return admission_id
 
 class PatientMedicationLink(models.Model):
-    patient = models.ForeignKey(Patient, on_delete=models.DO_NOTHING)
-    medication = models.ForeignKey(Medication, on_delete=models.DO_NOTHING)
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    medication = models.ForeignKey(Medication, on_delete=models.CASCADE)
     
 # class GeneAttributeLink(models.Model):
 #     gene = models.ForeignKey(Gene, on_delete=models.DO_NOTHING) 

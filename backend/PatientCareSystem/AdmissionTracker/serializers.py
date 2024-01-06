@@ -52,7 +52,7 @@ class AdmissionTypeSerializer(serializers.ModelSerializer):
 class PatientSerializer(serializers.ModelSerializer):
     gender = GenderSerializer(read_only=False)
     blood_type = BloodTypeSerializer(read_only=False)
-    medication = MedicationSerializer(many=True, read_only=True)
+    medication = MedicationSerializer(many=True, read_only=True) # medication added to patients through the admission form only
     class Meta:
         model = Patient
         fields = ['id','name', 'age', 'gender', 
@@ -70,7 +70,6 @@ class PatientSerializer(serializers.ModelSerializer):
         
         gender_data = self.initial_data["gender"]
         blood_type_data = self.initial_data["blood_type"]
-        medication_data = self.initial_data["medication"]
 
         # One to many relationship
         patient = Patient(**{**validated_data, 
@@ -78,33 +77,47 @@ class PatientSerializer(serializers.ModelSerializer):
                         'blood_type': BloodType.objects.get(pk=blood_type_data['id']) 
                         })
         patient.save() # save before you tacke many to many relationships
-
-        # # many to many relationships
-        medication_ids = [medication["id"] for medication in medication_data]
-        for medication_id in medication_ids:
-            medication_obj = Medication.objects.get(pk = medication_id)
-            patient.medication.add(medication_obj)
-
         return patient
+        # # # many to many relationships
+        # medication_ids = [medication["id"] for medication in medication_data]
+        # for medication_id in medication_ids:
+        #     medication_obj = Medication.objects.get(pk = medication_id)
+        #     patient.medication.add(medication_obj)
+    
+    def update(self, instance, validated_data):
+        gender_data = validated_data.pop('gender', None)
+        blood_type_data = validated_data.pop('blood_type', None)
 
+        # Update the Patient instance
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        instance.save()
 
+        # Update Gender
+        if gender_data:
+            gender_id = gender_data.get('id')
+            if gender_id:
+                instance.gender = Gender.objects.get(pk=gender_id)
+                instance.save()
 
-    # def create(self, validated_data):
-    #     '''
-    #     Needed for all foreign keys.
-    #     read_only=False allows POST and PUT request to change data on server
-    #     By default create method does not support nested data.
-    #     Nested data are better than flat data for front end because it needs the id as key for elements
-    #     therefore we must override create()
-    #     '''
-    #     gender_data = self.initial_data["gender"]
-    #     blood_type = self.initial_data["blood_type"]
-    #     patient = Patient(**{**validated_data, 
-    #                     'gender': Gender.objects.get(pk=gender_data['id']),
-    #                     'blood_type': BloodType.objects.get(pk=gender_data['id']) 
-    #                     })
-    #     patient.save()
-    #     return patient
+        # Update Blood Type
+        if blood_type_data:
+            blood_type_id = blood_type_data.get('id')
+            if blood_type_id:
+                instance.blood_type = BloodType.objects.get(pk=blood_type_id)
+                instance.save()
+        return instance
+    
+    # # Handle many-to-many relationship for medication
+    #     if medication_data:
+    #         medication_data = validated_data.pop('medication', [])
+    #         medication_ids = [medication['id'] for medication in medication_data]
+    #         medications = Medication.objects.filter(id__in=medication_ids)
+    #         instance.medication.set(medications)
+    #         return instance
+
+    
+
 
 class AdmissionSerializer(serializers.ModelSerializer):
     patient = PatientSerializer(read_only=True)
