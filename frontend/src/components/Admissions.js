@@ -41,7 +41,7 @@ const Admissions = (props) => {
   
     return (
       <div>
-        <h1> Table of admissions</h1>
+        <h1> {props.title ? props.title : "Table of admissions"}</h1>
         <Table striped>
           <tbody>
             <tr>

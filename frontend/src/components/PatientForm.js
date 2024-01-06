@@ -33,6 +33,8 @@ const PatientForm = (props) => {
     const [newMedication1, setNewMedication1] = useState(patientToUpdate?.medication?.length > 0 ? patientToUpdate.medication[0].medication : '');
     const [newMedication2, setNewMedication2] = useState(patientToUpdate?.medication?.length > 1 ? patientToUpdate.medication[0].medication : '');
     
+    const [buttonName, setButtonName] = useState('')
+
     useEffect(()=> {
         // Populating the state variables that hold the whole records for every model
         patientServices
@@ -54,13 +56,17 @@ const PatientForm = (props) => {
           .getAll()
           .then(response => {
             setMedications(response.data)
-          })      
+          })     
+        
+        setButtonName("Add")
          
          // If page is refreshed, the state sent by the update button is forgotten 
          return () => {
           navigate('/addPatient', {state: {}})
          } 
-     }, [navigate])
+          }, [navigate])
+
+
 
     const handleSubmit = (event) => {
       event.preventDefault()
@@ -75,6 +81,8 @@ const PatientForm = (props) => {
       const manySelectedMedications = [].concat(medication1, medication2)  
 
       if (patientToUpdate.id) {
+
+        // Updating an existing patient
         console.log(`Updating.... `)
         const changedPerson = {...patientToUpdate, 
               name: newName,
@@ -96,6 +104,7 @@ const PatientForm = (props) => {
 
       }
       else {
+
         // Creating a new patient
         console.log(`Creating....`)
         const newPatient = {
@@ -226,7 +235,7 @@ const PatientForm = (props) => {
             </Form.Group>
 
 
-            <Button variant='primary' type="submit" >add</Button>
+            <Button variant='primary' type="submit" >{buttonName}</Button>
           </Form>
       </div>
     );

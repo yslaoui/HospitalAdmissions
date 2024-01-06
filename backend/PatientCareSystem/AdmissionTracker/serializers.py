@@ -137,3 +137,40 @@ class AdmissionSerializer(serializers.ModelSerializer):
                     'insurance', 'admission_type',
                     'test_result', 'medical_condition']
 
+    def create(self, validated_data):
+        '''
+        Needed for all foreign keys.
+        read_only=False allows POST and PUT request to change data on server
+        By default create method does not support nested data.
+        Nested data are better than flat data for front end because it needs the id as key for elements
+        therefore we must override create()
+        '''
+        
+        patient_data = self.initial_data["patient"]
+        hospital_data = self.initial_data["hospital"]
+        doctor_data = self.initial_data["doctor"]
+        medication_data = self.initial_data["medication"]
+        insurance_data = self.initial_data["insurance"]
+        admissiontype_data = self.initial_data["admission_type"]
+        testresult_data = self.initial_data["test_result"]
+        medicalcondition_data = self.initial_data["medical_condition"]
+
+        # One to many relationship
+        admission = Admission(**{**validated_data, 
+                        'patient': Patient.objects.get(pk=patient_data['id']),
+                        'hospital': Hospital.objects.get(pk=hospital_data['id']),
+                        'doctor': Doctor.objects.get(pk=doctor_data['id']),
+                        'medication': Medication.objects.get(pk=medication_data['id']),
+                        'insurance': Insurance.objects.get(pk=insurance_data['id']),
+                        'admission_type': AdmissionType.objects.get(pk=admissiontype_data['id']),
+                        'test_result': TestResult.objects.get(pk=testresult_data['id']),
+                        'medical_condition': MedicalCondition.objects.get(pk=medicalcondition_data['id']),
+                        })
+        admission.save() # save before you tacke many to many relationships
+
+        # many to many relationships
+        medication = Medication.objects.get(pk=medication_data['id'])
+        patient = Patient.objects.get(pk=patient_data['id'])
+        patient.medication.add(medication)
+            
+        return admission
