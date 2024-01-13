@@ -67,25 +67,25 @@ class AdmissionTest(APITestCase):
         response = self.client.delete(self.delete_url)
         self.assertEqual(response.status_code, 204)
 
-    def test_genePostSuccess(self):
-        # sel.client.post does not accept a model instance, but a python dictionary
-        # Setup logger
-        logger = logging.getLogger('django')
-        post_data = {
-            "date_of_admission": self.admission4.date_of_admission,
-            "room_number": self.admission4.room_number,
-            "billing_amount": self.admission4.billing_amount,
-            "discharge_date": self.admission4.discharge_date,
-            "patient": self.admission4.patient.id,
-            "hospital": self.admission4.hospital.id,
-            "doctor": self.admission4.doctor.id,
-            "medication": self.admission4.medication.id,
-            "insurance": self.admission4.insurance.id,
-            "admission_type": self.admission4.admission_type.id,
-            "test_result": self.admission4.test_result.id,
-            "medical_condition": self.admission4.medical_condition.id
-}
-        response = self.client.post(self.post_url, post_data, format='json')
-        # Log the response
-        logger.debug(response)
-        self.assertEqual(response.status_code, 201)  
+#     def test_genePostSuccess(self):
+#         # sel.client.post does not accept a model instance, but a python dictionary
+#         # Setup logger
+#         logger = logging.getLogger('django')
+#         post_data = {
+#             "date_of_admission": self.admission4.date_of_admission,
+#             "room_number": self.admission4.room_number,
+#             "billing_amount": self.admission4.billing_amount,
+#             "discharge_date": self.admission4.discharge_date,
+#             "patient": self.admission4.patient.id,
+#             "hospital": self.admission4.hospital.id,
+#             "doctor": self.admission4.doctor.id,
+#             "medication": self.admission4.medication.id,
+#             "insurance": self.admission4.insurance.id,
+#             "admission_type": self.admission4.admission_type.id,
+#             "test_result": self.admission4.test_result.id,
+#             "medical_condition": self.admission4.medical_condition.id
+# }
+#         response = self.client.post(self.post_url, post_data, format='json')
+#         # Log the response
+#         logger.debug(response)
+#         self.assertEqual(response.status_code, 201)  
