@@ -89,3 +89,6 @@ class AdmissionTest(APITestCase):
 #         # Log the response
 #         logger.debug(response)
 #         self.assertEqual(response.status_code, 201)  
+        
+
+
