@@ -61,7 +61,7 @@ ROOT_URLCONF = 'PatientCareSystem.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'static', 'react')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -73,6 +73,9 @@ TEMPLATES = [
         },
     },
 ]
+
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static', 'react', 'static') ] # tells django where to find react's static files are
+
 
 WSGI_APPLICATION = 'PatientCareSystem.wsgi.application'
 
@@ -128,4 +131,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATIC_ROOT = BASE_DIR + "/staticfiles"
+
+
 

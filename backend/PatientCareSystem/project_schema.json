@@ -8,7 +8,7 @@
     "/api/admissions": {
       "get": {
         "operationId": "listAdmissionTypes",
-        "description": "",
+        "description": "The path to admissions",
         "parameters": [],
         "responses": {
           "200": {

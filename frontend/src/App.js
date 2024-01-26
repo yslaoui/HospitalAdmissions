@@ -14,13 +14,13 @@ const App = () => {
   return (
 <Router>
       <Routes>
-        <Route path="/" element={<Home/>} />
-        <Route path="/patients" element={<Patients/>} />
-        <Route path="/patients/:id" element={<PatientDetail/>} />
-        <Route path="/addPatient" element={<PatientForm/>} />
-        <Route path="/admissions" element={<Admissions/>} />
-        <Route path="/addAdmission" element={<AdmissionForm/>} />
-        <Route path="/addMedication" element={<MedicationForm/>} />
+        <Route path="/app/" element={<Home/>} />
+        <Route path="/app/patients" element={<Patients/>} />
+        <Route path="/app/patients/:id" element={<PatientDetail/>} />
+        <Route path="/app/addPatient" element={<PatientForm/>} />
+        <Route path="/app/admissions" element={<Admissions/>} />
+        <Route path="/app/addAdmission" element={<AdmissionForm/>} />
+        <Route path="/app/addMedication" element={<MedicationForm/>} />
 
       </Routes>
     </Router>
