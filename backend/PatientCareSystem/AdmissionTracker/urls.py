@@ -3,7 +3,7 @@ from . import api
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic import TemplateView
-
+from . import views
 # from django.urls import path, re_path
 # from django.views.generic import TemplateView
 # from . import views  # Assuming your views are in the same directory
@@ -12,7 +12,9 @@ from django.views.generic import TemplateView
 
 urlpatterns = [
     re_path(r'^app/.*', TemplateView.as_view(template_name='index.html')),
-    
+    # path('login', view.user_login)    
+    # path('/login', views.user_ )
+    path('login', views.user_login, name='user_login'),
     path('api/admissions', api.AdmissionList.as_view(), name='admissions_list_api'), 
     path('api/admissions/<int:pk>', api.AdmissionDetail.as_view(), name='admissions_detail_api'),
 

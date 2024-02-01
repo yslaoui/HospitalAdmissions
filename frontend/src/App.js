@@ -7,7 +7,7 @@ import MedicationForm from './components/MedicationForm'
 import PatientForm from './components/PatientForm'
 import Patients from './components/Patients'
 import AdmissionForm from './components/AdmissionForm';
-
+import LoginForm from './components/LoginForm';
 
 
 const App = () => {
@@ -21,6 +21,7 @@ const App = () => {
         <Route path="/app/admissions" element={<Admissions/>} />
         <Route path="/app/addAdmission" element={<AdmissionForm/>} />
         <Route path="/app/addMedication" element={<MedicationForm/>} />
+        <Route path='/app/login' element={<LoginForm/>}></Route>
 
       </Routes>
     </Router>
