@@ -1,5 +1,7 @@
 import axios from 'axios'
+import getCsrfToken from './csrfToken'
 const baseURL = 'http://127.0.0.1:8080/api/hospitals'
+
 
 const getAll = () => {
     return axios.get(baseURL)
@@ -9,15 +11,24 @@ const getDetail = (id) => {
     return axios.get(`${baseURL}/${id}`)
 }
 const insert = (resource) => {
-    return axios.post(baseURL, resource)
+    const csrfToken = getCsrfToken();
+    return axios.post(baseURL, resource, {
+        headers: {'X-CSRFToken': csrfToken} 
+     })
 }
 
 const update = (url,  newNote) => {
-    return axios.put(url, newNote)
+    const csrfToken = getCsrfToken();
+    return axios.put(url, newNote, {
+        headers: {'X-CSRFToken': csrfToken} 
+     })
 }
 
 const destroy = (url) => {
-    return axios.delete(url)
+    const csrfToken = getCsrfToken();
+    return axios.delete(url, {
+        headers: {'X-CSRFToken': csrfToken} 
+     })
 }
 
 

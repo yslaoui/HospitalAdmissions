@@ -4,6 +4,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic import TemplateView
 from . import views
+from django.views.decorators.csrf import csrf_exempt
 # from django.urls import path, re_path
 # from django.views.generic import TemplateView
 # from . import views  # Assuming your views are in the same directory
@@ -46,8 +47,8 @@ urlpatterns = [
     path('api/admissiontypes/<int:pk>', api.AdmissionTypeDetail.as_view(), name='admissiontypes_detail_api'),
 
 
-    path('api/patients', api.PatientList.as_view(), name='patients_list_api'), 
-    path('api/patients/<int:pk>', api.PatientDetail.as_view(), name='patients_detail_api'),
+    path('api/patients', csrf_exempt(api.PatientList.as_view()), name='patients_list_api'), 
+    path('api/patients/<int:pk>', csrf_exempt(api.PatientDetail.as_view()), name='patients_detail_api'),
 
     path('api/admissions', api.AdmissionTypeList.as_view(), name='admissions_list_api'), 
     path('api/admissions/<int:pk>', api.AdmissionTypeDetail.as_view(), name='admissions_detail_api')

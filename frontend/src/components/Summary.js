@@ -29,8 +29,8 @@ const Summary = () => {
 
   return (
     <div>
-        <p> {patientCount} patients <Button variant='primary' type="submit" href="/addPatient" > Add a patient </Button>  </p>
-        <p> {admissionCount} admissions <Button variant='primary' type="submit" href="/addPatient" > Add an admission </Button> </p>
+        <p> {patientCount} patients <Button variant='primary' type="submit" href="/app/addPatient" > Add a patient </Button>  </p>
+        <p> {admissionCount} admissions <Button variant='primary' type="submit" href="/app/addAdmission" > Add an admission </Button> </p>
         <Admissions title = "Latest admissions"/>
     </div>
   );

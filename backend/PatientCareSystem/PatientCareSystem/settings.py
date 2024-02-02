@@ -25,7 +25,7 @@ SECRET_KEY = '+)hz_m2*e&=j=x%jxf*6myp0$l8+jp^miyv9k%ooq_7#y7wral'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 CORS_ALLOW_ALL_ORIGINS = True
 
@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders'
 ]
+
+CSRF_COOKIE_SAMESITE = 'None'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

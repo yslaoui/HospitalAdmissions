@@ -68,7 +68,7 @@ const Admissions = (props) => {
                     </td>
 
                   <td> 
-                  <Link to={`/patients/${elem.patient?.id}`}>{elem.patient?.name}</Link> 
+                  <Link to={`/app/patients/${elem.patient?.id}`}>{elem.patient?.name}</Link> 
                   </td>
                   <td> {elem.medical_condition.medical_condition}</td>
                   <td> {elem.date_of_admission}</td>

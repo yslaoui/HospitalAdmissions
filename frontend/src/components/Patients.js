@@ -43,7 +43,7 @@ const Patients = (props) => {
 
     const handleUpdate = (id) => {
         const patientToUpdate = patients.find(x => x.id == id )
-        navigate('/addPatient', { state: { patientToUpdate } });
+        navigate('/app/addPatient', { state: { patientToUpdate } });
     }
   
   
